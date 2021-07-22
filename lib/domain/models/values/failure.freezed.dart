@@ -16,10 +16,10 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$FailureTearOff {
   const _$FailureTearOff();
 
-  _Failure call({String? code, required String? message}) {
+  _Failure call({required String? message, String? code}) {
     return _Failure(
-      code: code,
       message: message,
+      code: code,
     );
   }
 }
@@ -29,8 +29,8 @@ const $Failure = _$FailureTearOff();
 
 /// @nodoc
 mixin _$Failure {
-  String? get code => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
+  String? get code => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $FailureCopyWith<Failure> get copyWith => throw _privateConstructorUsedError;
@@ -40,7 +40,7 @@ mixin _$Failure {
 abstract class $FailureCopyWith<$Res> {
   factory $FailureCopyWith(Failure value, $Res Function(Failure) then) =
       _$FailureCopyWithImpl<$Res>;
-  $Res call({String? code, String? message});
+  $Res call({String? message, String? code});
 }
 
 /// @nodoc
@@ -53,17 +53,17 @@ class _$FailureCopyWithImpl<$Res> implements $FailureCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? code = freezed,
     Object? message = freezed,
+    Object? code = freezed,
   }) {
     return _then(_value.copyWith(
-      code: code == freezed
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
-              as String?,
       message: message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+      code: code == freezed
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -74,7 +74,7 @@ abstract class _$FailureCopyWith<$Res> implements $FailureCopyWith<$Res> {
   factory _$FailureCopyWith(_Failure value, $Res Function(_Failure) then) =
       __$FailureCopyWithImpl<$Res>;
   @override
-  $Res call({String? code, String? message});
+  $Res call({String? message, String? code});
 }
 
 /// @nodoc
@@ -88,17 +88,17 @@ class __$FailureCopyWithImpl<$Res> extends _$FailureCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? code = freezed,
     Object? message = freezed,
+    Object? code = freezed,
   }) {
     return _then(_Failure(
-      code: code == freezed
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
-              as String?,
       message: message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+      code: code == freezed
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -107,33 +107,34 @@ class __$FailureCopyWithImpl<$Res> extends _$FailureCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Failure implements _Failure {
-  const _$_Failure({this.code, required this.message});
+  const _$_Failure({required this.message, this.code});
 
   @override
-  final String? code;
-  @override
   final String? message;
+  @override
+  final String? code;
 
   @override
   String toString() {
-    return 'Failure(code: $code, message: $message)';
+    return 'Failure(message: $message, code: $code)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Failure &&
-            (identical(other.code, code) ||
-                const DeepCollectionEquality().equals(other.code, code)) &&
             (identical(other.message, message) ||
-                const DeepCollectionEquality().equals(other.message, message)));
+                const DeepCollectionEquality()
+                    .equals(other.message, message)) &&
+            (identical(other.code, code) ||
+                const DeepCollectionEquality().equals(other.code, code)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(code) ^
-      const DeepCollectionEquality().hash(message);
+      const DeepCollectionEquality().hash(message) ^
+      const DeepCollectionEquality().hash(code);
 
   @JsonKey(ignore: true)
   @override
@@ -142,12 +143,12 @@ class _$_Failure implements _Failure {
 }
 
 abstract class _Failure implements Failure {
-  const factory _Failure({String? code, required String? message}) = _$_Failure;
+  const factory _Failure({required String? message, String? code}) = _$_Failure;
 
   @override
-  String? get code => throw _privateConstructorUsedError;
-  @override
   String? get message => throw _privateConstructorUsedError;
+  @override
+  String? get code => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$FailureCopyWith<_Failure> get copyWith =>

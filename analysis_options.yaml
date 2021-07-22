@@ -18,7 +18,6 @@ linter:
     lines_longer_than_80_chars: true
     omit_local_variable_types: true
     one_member_abstracts: true
-    only_throw_errors: true
     package_api_docs: true
     prefer_adjacent_string_concatenation: true
     prefer_expression_function_bodies: true

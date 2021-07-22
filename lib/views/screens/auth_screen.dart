@@ -23,7 +23,6 @@ class AuthScreen extends HookWidget {
     }
 
     return Scaffold(
-      backgroundColor: Color(0xFFF2EDE8),
       body: SafeArea(
         child: SizedBox(
           width: screenSize.width,
@@ -56,14 +55,14 @@ class AuthScreen extends HookWidget {
                           ),
                           const SizedBox(height: 10),
                           isLogin.value
-                              ? TextFormField(
+                              ? Container()
+                              : TextFormField(
                                   controller: passwordTwoTFController,
                                   decoration: InputDecoration(
                                       labelText: 'Password',
                                       hintText: 'Confirm your password',
                                       helperText: 'Confirm your password'),
-                                )
-                              : Container(),
+                                ),
                           const SizedBox(height: 20),
                           isLogin.value
                               ? _BuildAuthButtons(
