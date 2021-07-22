@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import '../../utils/validators.dart';
 import '../../constants/hooks.dart';
 import '../../constants/assets.dart';
 
 /// Auth Screen
 class AuthScreen extends HookWidget {
   /// Auth Screen Constructor
-  const AuthScreen({Key? key}) : super(key: key);
+  AuthScreen({Key? key}) : super(key: key);
 
+  /// Used for form validation
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final screenSize = useScreenSize();
     final emailTFController = useTextEditingController();
     final passwordOneTFController = useTextEditingController();
     final passwordTwoTFController = useTextEditingController();
-
     final isLogin = useState(true);
 
     void handleTextButtons() {
       isLogin.value = !isLogin.value;
-      print(isLogin.value);
     }
 
     return Scaffold(
@@ -38,10 +39,12 @@ class AuthScreen extends HookWidget {
                   child: Container(
                     padding: EdgeInsets.all(20),
                     child: Form(
+                      key: _formKey,
                       child: Column(
                         children: [
                           TextFormField(
                             controller: emailTFController,
+                            validator: StringValidators.validateEmail,
                             decoration: InputDecoration(
                                 labelText: 'Email',
                                 hintText: 'Enter your email here'),
@@ -49,6 +52,7 @@ class AuthScreen extends HookWidget {
                           const SizedBox(height: 10),
                           TextFormField(
                             controller: passwordOneTFController,
+                            validator: StringValidators.passwordValidator,
                             decoration: InputDecoration(
                                 labelText: 'Password',
                                 hintText: 'Enter your password here'),
@@ -58,6 +62,10 @@ class AuthScreen extends HookWidget {
                               ? Container()
                               : TextFormField(
                                   controller: passwordTwoTFController,
+                                  validator: (passwordTwo) =>
+                                      StringValidators.confirmPasswordValidator(
+                                          passwordOneTFController.text,
+                                          passwordTwo),
                                   decoration: InputDecoration(
                                       labelText: 'Password',
                                       hintText: 'Confirm your password',
@@ -70,14 +78,16 @@ class AuthScreen extends HookWidget {
                                   elevatedButtonLabel: 'Login',
                                   textButtonLabel:
                                       "Don't have an account? Sign Up",
-                                  elevatedButtonOnPressed: () {},
+                                  elevatedButtonOnPressed: () =>
+                                      _formKey.currentState?.validate(),
                                   textButtonOnPressed: handleTextButtons)
                               : _BuildAuthButtons(
                                   screenSize: screenSize,
                                   elevatedButtonLabel: 'Sign Up',
                                   textButtonLabel:
                                       'Already have an account? Login',
-                                  elevatedButtonOnPressed: () {},
+                                  elevatedButtonOnPressed:
+                                      _formKey.currentState?.validate,
                                   textButtonOnPressed: handleTextButtons),
                         ],
                       ),
