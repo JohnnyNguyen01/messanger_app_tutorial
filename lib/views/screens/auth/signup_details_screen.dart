@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:youtube_messenger_tutorial/utils/validators.dart';
+import '../../../constants/constants.dart';
 import '../../../constants/hooks.dart';
 import '../../../domain/providers/auth.dart';
 
@@ -48,7 +50,7 @@ class SignUpDetailsScreen extends HookWidget {
                             : null,
                       ),
                       child: CircleAvatar(
-                        radius: 80,
+                        radius: circleAvatarRadius,
                         child: userAvatar == null
                             ? Icon(
                                 Icons.person,
@@ -86,6 +88,7 @@ class SignUpDetailsScreen extends HookWidget {
                           children: [
                             TextFormField(
                               controller: firstNameController,
+                              validator: StringValidators.firstNameValidator,
                               decoration: InputDecoration(
                                   hintText: 'Enter your name here',
                                   labelText: 'First Name',
@@ -95,6 +98,7 @@ class SignUpDetailsScreen extends HookWidget {
                             const SizedBox(height: 10),
                             TextFormField(
                               controller: lastNameController,
+                              validator: StringValidators.lastNameValidator,
                               decoration: InputDecoration(
                                 hintText: 'Enter your last name here',
                                 labelText: 'Last Name',
@@ -102,7 +106,11 @@ class SignUpDetailsScreen extends HookWidget {
                             ),
                             const SizedBox(height: 10),
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                if (formKey.currentState != null) {
+                                  if (formKey.currentState!.validate()) {}
+                                }
+                              },
                               child: const Text('Enter the club'),
                             ),
                           ],

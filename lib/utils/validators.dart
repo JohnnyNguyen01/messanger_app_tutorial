@@ -49,4 +49,22 @@ class StringValidators {
       return 'Please confirm your password';
     }
   }
+
+  /// Validator for a User's first name
+  static String? firstNameValidator(String? firstName) {
+    if (firstName != null && firstName.isNotEmpty) {
+      return null;
+    } else {
+      return 'Please enter your first name';
+    }
+  }
+
+  /// Validator for a User's first name
+  static String? lastNameValidator(String? lastName) {
+    if (lastName != null && lastName.isNotEmpty) {
+      return null;
+    } else {
+      return 'Please enter your first name';
+    }
+  }
 }
