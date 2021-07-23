@@ -2,6 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../../models/values/failure.dart';
 import 'auth.dart';
 
+/// Implementaiton of the Auth Repository
+///
+/// Here I am using Firebase, however, in can be swapped with whatever
+/// service you like.
 class AuthRepositoryImplementation implements AuthRepository {
   @override
   User? getUser() {

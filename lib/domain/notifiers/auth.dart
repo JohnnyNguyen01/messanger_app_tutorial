@@ -75,6 +75,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       state = AuthState.authenticated(user);
     } on Failure catch (e) {
       state = AuthState.error(e.message);
+      _errorNotifier.setNewError(e);
     }
   }
 
