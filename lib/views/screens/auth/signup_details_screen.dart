@@ -34,7 +34,7 @@ class SignUpDetailsScreen extends HookWidget {
           message: failure?.message ?? 'Something went wrong.'),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Sgn up'),
+          title: Text('About You'),
         ),
         body: auth.when(
           error: (_) => null,

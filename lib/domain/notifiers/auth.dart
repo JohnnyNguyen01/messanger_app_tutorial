@@ -58,6 +58,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       required String lastName,
       required File file}) async {
     try {
+      state = AuthState.loading();
       // sign up user
       final uid = await _authRepo.signupWithEmailAndPassword(
           email: email, password: password);
@@ -82,6 +83,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   /// Login the user with an email and password
   Future<void> loginWithEmailPassword(
       {required String? email, required String? password}) async {
+    state = AuthState.loading();
     try {
       await _authRepo.loginWithEmailAndPassword(
           email: email, password: password);
