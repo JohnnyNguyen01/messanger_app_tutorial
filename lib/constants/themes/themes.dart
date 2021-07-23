@@ -9,6 +9,12 @@ class Themes {
   /// Primary theme
   static final primaryTheme = ThemeData(
     backgroundColor: backgroundColor,
+    primaryColor: Colors.black,
+    appBarTheme: AppBarTheme(backgroundColor: Colors.black),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: Colors.black,
+      focusColor: Colors.black,
+    ),
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
         overlayColor:

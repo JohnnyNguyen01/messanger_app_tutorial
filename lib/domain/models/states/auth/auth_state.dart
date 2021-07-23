@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../values/user.dart';
 
@@ -14,8 +16,16 @@ class AuthState with _$AuthState {
   /// User is Authenticated
   const factory AuthState.authenticated(User? user) = Authenticated;
 
-  /// User is Logging In / Signing uo
+  /// User is Logging In / Signing up
   const factory AuthState.loading() = Loading;
+
+  /// User is Signed Up
+  ///
+  /// Used to specify that user also needs to proceed to onboarding
+  const factory AuthState.signedUpFirstTime(
+      {required String email,
+      required String password,
+      required File? imageFile}) = SignedUpFirstTime;
 
   /// Error with login or signup
   const factory AuthState.error([String? message]) = Error;

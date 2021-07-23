@@ -2,11 +2,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:youtube_messenger_tutorial/views/screens/error_screen.dart';
+import 'views/screens/auth/signup_details_screen.dart';
+import 'views/screens/error_screen.dart';
 import 'domain/models/states/auth/auth_state.dart';
 import 'domain/providers/auth.dart';
 import 'constants/themes/themes.dart';
-import 'views/screens/auth_screen.dart';
+import 'views/screens/auth/auth_screen.dart';
 
 void main() async {
   // Added to initialise firebase and make sure it works.
@@ -37,6 +38,11 @@ class MyApp extends HookWidget {
             MaterialPage<AuthScreen>(
               key: ValueKey('AuthScreen'),
               child: AuthScreen(),
+            ),
+          if (authState is SignedUpFirstTime)
+            MaterialPage<SignUpDetailsScreen>(
+              key: ValueKey('SignUpDetailsScreen'),
+              child: SignUpDetailsScreen(),
             ),
           if (authState is Error)
             MaterialPage<ErrorScreen>(

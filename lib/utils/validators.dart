@@ -9,7 +9,7 @@ class StringValidators {
               r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
           .hasMatch(email);
       if (emailIsValid) {
-        return '';
+        return null;
       } else {
         return 'Pleasee enter a valid email address.';
       }
@@ -25,7 +25,7 @@ class StringValidators {
   static String? passwordValidator(String? password) {
     if (password != null && password.isNotEmpty) {
       password.length > 8
-          ? ''
+          ? null
           : 'Please enter a password at least 8 characters long';
     } else {
       return 'Please enter your password';

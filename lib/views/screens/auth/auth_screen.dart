@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import '../../utils/validators.dart';
-import '../../constants/hooks.dart';
-import '../../constants/assets.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../../domain/providers/auth.dart';
+import '../../../utils/validators.dart';
+import '../../../constants/hooks.dart';
+import '../../../constants/assets.dart';
 
 /// Auth Screen
 class AuthScreen extends HookWidget {
@@ -17,6 +19,7 @@ class AuthScreen extends HookWidget {
     final passwordTwoTFController = useTextEditingController();
     final isLogin = useState(true);
     final _formKey = useMemoized(() => GlobalKey<FormState>());
+    final authNotifier = useProvider(authProvider.notifier);
 
     void handleTextButtons() => isLogin.value = !isLogin.value;
 
@@ -55,6 +58,7 @@ class AuthScreen extends HookWidget {
                           TextFormField(
                             controller: passwordOneTFController,
                             validator: StringValidators.passwordValidator,
+                            obscureText: true,
                             decoration: InputDecoration(
                                 labelText: 'Password',
                                 hintText: 'Enter your password here'),
@@ -68,6 +72,7 @@ class AuthScreen extends HookWidget {
                                       StringValidators.confirmPasswordValidator(
                                           passwordOneTFController.text,
                                           passwordTwo),
+                                  obscureText: true,
                                   decoration: InputDecoration(
                                       labelText: 'Password',
                                       hintText: 'Confirm your password',
@@ -87,7 +92,16 @@ class AuthScreen extends HookWidget {
                                   elevatedButtonLabel: 'Sign Up',
                                   textButtonLabel:
                                       'Already have an account? Login',
-                                  elevatedButtonOnPressed: handleSubmit,
+                                  elevatedButtonOnPressed: () {
+                                    if (_formKey.currentState != null) {
+                                      _formKey.currentState!.validate()
+                                          ? authNotifier.setToSignUp(
+                                              email: emailTFController.text,
+                                              password:
+                                                  passwordOneTFController.text)
+                                          : null;
+                                    }
+                                  },
                                   textButtonOnPressed: handleTextButtons),
                         ],
                       ),

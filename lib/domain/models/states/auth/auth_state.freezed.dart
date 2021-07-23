@@ -30,6 +30,17 @@ class _$AuthStateTearOff {
     return const Loading();
   }
 
+  SignedUpFirstTime signedUpFirstTime(
+      {required String email,
+      required String password,
+      required File? imageFile}) {
+    return SignedUpFirstTime(
+      email: email,
+      password: password,
+      imageFile: imageFile,
+    );
+  }
+
   Error error([String? message]) {
     return Error(
       message,
@@ -47,6 +58,8 @@ mixin _$AuthState {
     required TResult Function() unAuthenticated,
     required TResult Function(User? user) authenticated,
     required TResult Function() loading,
+    required TResult Function(String email, String password, File? imageFile)
+        signedUpFirstTime,
     required TResult Function(String? message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -55,6 +68,8 @@ mixin _$AuthState {
     TResult Function()? unAuthenticated,
     TResult Function(User? user)? authenticated,
     TResult Function()? loading,
+    TResult Function(String email, String password, File? imageFile)?
+        signedUpFirstTime,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) =>
@@ -64,6 +79,7 @@ mixin _$AuthState {
     required TResult Function(UnAuthenticated value) unAuthenticated,
     required TResult Function(Authenticated value) authenticated,
     required TResult Function(Loading value) loading,
+    required TResult Function(SignedUpFirstTime value) signedUpFirstTime,
     required TResult Function(Error value) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -72,6 +88,7 @@ mixin _$AuthState {
     TResult Function(UnAuthenticated value)? unAuthenticated,
     TResult Function(Authenticated value)? authenticated,
     TResult Function(Loading value)? loading,
+    TResult Function(SignedUpFirstTime value)? signedUpFirstTime,
     TResult Function(Error value)? error,
     required TResult orElse(),
   }) =>
@@ -135,6 +152,8 @@ class _$UnAuthenticated implements UnAuthenticated {
     required TResult Function() unAuthenticated,
     required TResult Function(User? user) authenticated,
     required TResult Function() loading,
+    required TResult Function(String email, String password, File? imageFile)
+        signedUpFirstTime,
     required TResult Function(String? message) error,
   }) {
     return unAuthenticated();
@@ -146,6 +165,8 @@ class _$UnAuthenticated implements UnAuthenticated {
     TResult Function()? unAuthenticated,
     TResult Function(User? user)? authenticated,
     TResult Function()? loading,
+    TResult Function(String email, String password, File? imageFile)?
+        signedUpFirstTime,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
@@ -161,6 +182,7 @@ class _$UnAuthenticated implements UnAuthenticated {
     required TResult Function(UnAuthenticated value) unAuthenticated,
     required TResult Function(Authenticated value) authenticated,
     required TResult Function(Loading value) loading,
+    required TResult Function(SignedUpFirstTime value) signedUpFirstTime,
     required TResult Function(Error value) error,
   }) {
     return unAuthenticated(this);
@@ -172,6 +194,7 @@ class _$UnAuthenticated implements UnAuthenticated {
     TResult Function(UnAuthenticated value)? unAuthenticated,
     TResult Function(Authenticated value)? authenticated,
     TResult Function(Loading value)? loading,
+    TResult Function(SignedUpFirstTime value)? signedUpFirstTime,
     TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
@@ -266,6 +289,8 @@ class _$Authenticated implements Authenticated {
     required TResult Function() unAuthenticated,
     required TResult Function(User? user) authenticated,
     required TResult Function() loading,
+    required TResult Function(String email, String password, File? imageFile)
+        signedUpFirstTime,
     required TResult Function(String? message) error,
   }) {
     return authenticated(user);
@@ -277,6 +302,8 @@ class _$Authenticated implements Authenticated {
     TResult Function()? unAuthenticated,
     TResult Function(User? user)? authenticated,
     TResult Function()? loading,
+    TResult Function(String email, String password, File? imageFile)?
+        signedUpFirstTime,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
@@ -292,6 +319,7 @@ class _$Authenticated implements Authenticated {
     required TResult Function(UnAuthenticated value) unAuthenticated,
     required TResult Function(Authenticated value) authenticated,
     required TResult Function(Loading value) loading,
+    required TResult Function(SignedUpFirstTime value) signedUpFirstTime,
     required TResult Function(Error value) error,
   }) {
     return authenticated(this);
@@ -303,6 +331,7 @@ class _$Authenticated implements Authenticated {
     TResult Function(UnAuthenticated value)? unAuthenticated,
     TResult Function(Authenticated value)? authenticated,
     TResult Function(Loading value)? loading,
+    TResult Function(SignedUpFirstTime value)? signedUpFirstTime,
     TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
@@ -362,6 +391,8 @@ class _$Loading implements Loading {
     required TResult Function() unAuthenticated,
     required TResult Function(User? user) authenticated,
     required TResult Function() loading,
+    required TResult Function(String email, String password, File? imageFile)
+        signedUpFirstTime,
     required TResult Function(String? message) error,
   }) {
     return loading();
@@ -373,6 +404,8 @@ class _$Loading implements Loading {
     TResult Function()? unAuthenticated,
     TResult Function(User? user)? authenticated,
     TResult Function()? loading,
+    TResult Function(String email, String password, File? imageFile)?
+        signedUpFirstTime,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
@@ -388,6 +421,7 @@ class _$Loading implements Loading {
     required TResult Function(UnAuthenticated value) unAuthenticated,
     required TResult Function(Authenticated value) authenticated,
     required TResult Function(Loading value) loading,
+    required TResult Function(SignedUpFirstTime value) signedUpFirstTime,
     required TResult Function(Error value) error,
   }) {
     return loading(this);
@@ -399,6 +433,7 @@ class _$Loading implements Loading {
     TResult Function(UnAuthenticated value)? unAuthenticated,
     TResult Function(Authenticated value)? authenticated,
     TResult Function(Loading value)? loading,
+    TResult Function(SignedUpFirstTime value)? signedUpFirstTime,
     TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
@@ -411,6 +446,165 @@ class _$Loading implements Loading {
 
 abstract class Loading implements AuthState {
   const factory Loading() = _$Loading;
+}
+
+/// @nodoc
+abstract class $SignedUpFirstTimeCopyWith<$Res> {
+  factory $SignedUpFirstTimeCopyWith(
+          SignedUpFirstTime value, $Res Function(SignedUpFirstTime) then) =
+      _$SignedUpFirstTimeCopyWithImpl<$Res>;
+  $Res call({String email, String password, File? imageFile});
+}
+
+/// @nodoc
+class _$SignedUpFirstTimeCopyWithImpl<$Res>
+    extends _$AuthStateCopyWithImpl<$Res>
+    implements $SignedUpFirstTimeCopyWith<$Res> {
+  _$SignedUpFirstTimeCopyWithImpl(
+      SignedUpFirstTime _value, $Res Function(SignedUpFirstTime) _then)
+      : super(_value, (v) => _then(v as SignedUpFirstTime));
+
+  @override
+  SignedUpFirstTime get _value => super._value as SignedUpFirstTime;
+
+  @override
+  $Res call({
+    Object? email = freezed,
+    Object? password = freezed,
+    Object? imageFile = freezed,
+  }) {
+    return _then(SignedUpFirstTime(
+      email: email == freezed
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      password: password == freezed
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+      imageFile: imageFile == freezed
+          ? _value.imageFile
+          : imageFile // ignore: cast_nullable_to_non_nullable
+              as File?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SignedUpFirstTime implements SignedUpFirstTime {
+  const _$SignedUpFirstTime(
+      {required this.email, required this.password, required this.imageFile});
+
+  @override
+  final String email;
+  @override
+  final String password;
+  @override
+  final File? imageFile;
+
+  @override
+  String toString() {
+    return 'AuthState.signedUpFirstTime(email: $email, password: $password, imageFile: $imageFile)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is SignedUpFirstTime &&
+            (identical(other.email, email) ||
+                const DeepCollectionEquality().equals(other.email, email)) &&
+            (identical(other.password, password) ||
+                const DeepCollectionEquality()
+                    .equals(other.password, password)) &&
+            (identical(other.imageFile, imageFile) ||
+                const DeepCollectionEquality()
+                    .equals(other.imageFile, imageFile)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(email) ^
+      const DeepCollectionEquality().hash(password) ^
+      const DeepCollectionEquality().hash(imageFile);
+
+  @JsonKey(ignore: true)
+  @override
+  $SignedUpFirstTimeCopyWith<SignedUpFirstTime> get copyWith =>
+      _$SignedUpFirstTimeCopyWithImpl<SignedUpFirstTime>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() unAuthenticated,
+    required TResult Function(User? user) authenticated,
+    required TResult Function() loading,
+    required TResult Function(String email, String password, File? imageFile)
+        signedUpFirstTime,
+    required TResult Function(String? message) error,
+  }) {
+    return signedUpFirstTime(email, password, imageFile);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? unAuthenticated,
+    TResult Function(User? user)? authenticated,
+    TResult Function()? loading,
+    TResult Function(String email, String password, File? imageFile)?
+        signedUpFirstTime,
+    TResult Function(String? message)? error,
+    required TResult orElse(),
+  }) {
+    if (signedUpFirstTime != null) {
+      return signedUpFirstTime(email, password, imageFile);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(UnAuthenticated value) unAuthenticated,
+    required TResult Function(Authenticated value) authenticated,
+    required TResult Function(Loading value) loading,
+    required TResult Function(SignedUpFirstTime value) signedUpFirstTime,
+    required TResult Function(Error value) error,
+  }) {
+    return signedUpFirstTime(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(UnAuthenticated value)? unAuthenticated,
+    TResult Function(Authenticated value)? authenticated,
+    TResult Function(Loading value)? loading,
+    TResult Function(SignedUpFirstTime value)? signedUpFirstTime,
+    TResult Function(Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (signedUpFirstTime != null) {
+      return signedUpFirstTime(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SignedUpFirstTime implements AuthState {
+  const factory SignedUpFirstTime(
+      {required String email,
+      required String password,
+      required File? imageFile}) = _$SignedUpFirstTime;
+
+  String get email => throw _privateConstructorUsedError;
+  String get password => throw _privateConstructorUsedError;
+  File? get imageFile => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $SignedUpFirstTimeCopyWith<SignedUpFirstTime> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -478,6 +672,8 @@ class _$Error implements Error {
     required TResult Function() unAuthenticated,
     required TResult Function(User? user) authenticated,
     required TResult Function() loading,
+    required TResult Function(String email, String password, File? imageFile)
+        signedUpFirstTime,
     required TResult Function(String? message) error,
   }) {
     return error(message);
@@ -489,6 +685,8 @@ class _$Error implements Error {
     TResult Function()? unAuthenticated,
     TResult Function(User? user)? authenticated,
     TResult Function()? loading,
+    TResult Function(String email, String password, File? imageFile)?
+        signedUpFirstTime,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
@@ -504,6 +702,7 @@ class _$Error implements Error {
     required TResult Function(UnAuthenticated value) unAuthenticated,
     required TResult Function(Authenticated value) authenticated,
     required TResult Function(Loading value) loading,
+    required TResult Function(SignedUpFirstTime value) signedUpFirstTime,
     required TResult Function(Error value) error,
   }) {
     return error(this);
@@ -515,6 +714,7 @@ class _$Error implements Error {
     TResult Function(UnAuthenticated value)? unAuthenticated,
     TResult Function(Authenticated value)? authenticated,
     TResult Function(Loading value)? loading,
+    TResult Function(SignedUpFirstTime value)? signedUpFirstTime,
     TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
