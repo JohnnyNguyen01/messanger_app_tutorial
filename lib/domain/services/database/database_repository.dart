@@ -6,5 +6,5 @@ abstract class DatabaseRepository {
   Future<void> addNewUser({required User? user});
 
   ///Add a new [Message] to the database.
-  Future<void> addNewMessage();
+  // Future<void> addNewMessage();
 }

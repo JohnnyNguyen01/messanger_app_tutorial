@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:youtube_messenger_tutorial/utils/validators.dart';
+import '../../../utils/validators.dart';
 import '../../../constants/constants.dart';
 import '../../../constants/hooks.dart';
 import '../../../domain/providers/auth.dart';
@@ -32,7 +32,7 @@ class SignUpDetailsScreen extends HookWidget {
         unAuthenticated: () => null,
         authenticated: (_) => null,
         loading: () => null,
-        signedUpFirstTime: (_, __, userAvatar) => Center(
+        signedUpFirstTime: (email, password, userAvatar) => Center(
           child: SizedBox(
             width: screenSize.width,
             child: Column(
@@ -108,7 +108,15 @@ class SignUpDetailsScreen extends HookWidget {
                             ElevatedButton(
                               onPressed: () {
                                 if (formKey.currentState != null) {
-                                  if (formKey.currentState!.validate()) {}
+                                  if (formKey.currentState!.validate() &&
+                                      userAvatar != null) {
+                                    authNotifier.signUpNewUser(
+                                        email: email,
+                                        password: password,
+                                        firstName: firstNameController.text,
+                                        lastName: lastNameController.text,
+                                        file: userAvatar);
+                                  }
                                 }
                               },
                               child: const Text('Enter the club'),

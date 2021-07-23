@@ -28,12 +28,13 @@ class AuthRepositoryImplementation implements AuthRepository {
   }
 
   @override
-  Future<void> signupWithEmailAndPassword(
+  Future<String?> signupWithEmailAndPassword(
       {required String? email, required String? password}) async {
     try {
       if (email != null && password != null) {
-        await FirebaseAuth.instance
+        final userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
+        return userCredential.user?.uid;
       }
     } on FirebaseAuthException catch (e) {
       throw Failure(code: e.code, message: e.message);

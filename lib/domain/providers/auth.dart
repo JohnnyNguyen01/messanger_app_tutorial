@@ -8,5 +8,11 @@ import '../notifiers/auth.dart';
 final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
   final authRepo = ref.read(authRepoProvider);
   final pickerService = ref.read(imagePickerServiceProvider);
-  return AuthNotifier(authRepo: authRepo, pickerService: pickerService);
+  final databaseRepository = ref.read(databaseRepoProvider);
+  final storageRepo = ref.read(storageRepoProvider);
+  return AuthNotifier(
+      authRepo: authRepo,
+      databaseRepository: databaseRepository,
+      pickerService: pickerService,
+      storageRepo: storageRepo);
 });

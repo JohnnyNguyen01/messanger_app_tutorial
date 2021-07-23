@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../services/database/storage_repository.dart';
+import '../services/database/database_repository.dart';
 import '../services/device/image_picker.dart';
 import '../models/states/auth/auth_state.dart';
 import '../models/values/failure.dart';
@@ -14,13 +16,19 @@ class AuthNotifier extends StateNotifier<AuthState> {
   /// Here we declare that the initial state of the User being unauthenticated
   AuthNotifier(
       {required AuthRepository authRepo,
-      required ImagePickerService pickerService})
+      required ImagePickerService pickerService,
+      required DatabaseRepository databaseRepository,
+      required StorageRepository storageRepo})
       : _authRepo = authRepo,
         _pickerService = pickerService,
+        _databaseRepo = databaseRepository,
+        _storageRepo = storageRepo,
         super(AuthState.unAuthenticated());
 
   final AuthRepository _authRepo;
   final ImagePickerService _pickerService;
+  final DatabaseRepository _databaseRepo;
+  final StorageRepository _storageRepo;
 
   /// sets the state to the `AuthState.SignUpFirstTime` state
   void setToSignUp({required String email, required String password}) {
@@ -39,18 +47,28 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   /// Sign up the current user using their email and password. If successful,
   /// navigate to messaging screen.
-  Future<void> signUpWithEmailAndPassword(
-      {required String? email, required String? password}) async {
+  Future<void> signUpNewUser(
+      {required String email,
+      required String password,
+      required String firstName,
+      required String lastName,
+      required File file}) async {
     try {
       // sign up user
-      await _authRepo.signupWithEmailAndPassword(
+      final uid = await _authRepo.signupWithEmailAndPassword(
           email: email, password: password);
-      // set firestore documents
-
       // set storage images
-
+      final imageUrl = await _storageRepo.uploadImage(file, uid);
+      // set firestore documents
+      final user = User(
+          email: email,
+          firstName: firstName,
+          lastName: lastName,
+          uid: uid,
+          profileImageUrl: imageUrl);
+      await _databaseRepo.addNewUser(user: user);
       // set user state
-
+      state = AuthState.authenticated(user);
     } on Failure catch (e) {
       state = AuthState.error(e.message);
     }
