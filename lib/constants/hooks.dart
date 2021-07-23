@@ -8,3 +8,17 @@ Size useScreenSize({BuildContext? context}) =>
 /// Hook to use app theme
 ThemeData useTheme({BuildContext? context}) =>
     Theme.of(context ?? useContext());
+
+/// Shows a snackbar to the User
+void useSnackBar({
+  required BuildContext context,
+  required String message,
+  Color? color,
+}) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      backgroundColor: color,
+      content: Text(message),
+    ),
+  );
+}

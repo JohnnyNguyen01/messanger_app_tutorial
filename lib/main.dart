@@ -2,9 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:youtube_messenger_tutorial/views/screens/messaging/messaging_screen.dart';
+import 'views/screens/messaging/messaging_screen.dart';
 import 'views/screens/auth/signup_details_screen.dart';
-import 'views/screens/error_screen.dart';
 import 'domain/models/states/auth/auth_state.dart';
 import 'domain/providers/auth.dart';
 import 'constants/themes/themes.dart';
@@ -51,9 +50,9 @@ class MyApp extends HookWidget {
               child: MessagingScreen(),
             ),
           if (authState is Error)
-            MaterialPage<ErrorScreen>(
-              key: ValueKey('ErrorScreen'),
-              child: ErrorScreen(),
+            MaterialPage<AuthScreen>(
+              key: ValueKey('AuthScreen'),
+              child: AuthScreen(),
             ),
         ],
         // called everytime Navigator.pop() is called

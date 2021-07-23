@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'error.dart';
 import '../services/database/storage_repository.dart';
 import '../services/database/database_repository.dart';
 import '../services/device/image_picker.dart';
@@ -18,17 +19,20 @@ class AuthNotifier extends StateNotifier<AuthState> {
       {required AuthRepository authRepo,
       required ImagePickerService pickerService,
       required DatabaseRepository databaseRepository,
-      required StorageRepository storageRepo})
+      required StorageRepository storageRepo,
+      required ErrorNotifier errorNotifier})
       : _authRepo = authRepo,
         _pickerService = pickerService,
         _databaseRepo = databaseRepository,
         _storageRepo = storageRepo,
+        _errorNotifier = errorNotifier,
         super(AuthState.unAuthenticated());
 
   final AuthRepository _authRepo;
   final ImagePickerService _pickerService;
   final DatabaseRepository _databaseRepo;
   final StorageRepository _storageRepo;
+  final ErrorNotifier _errorNotifier;
 
   /// sets the state to the `AuthState.SignUpFirstTime` state
   void setToSignUp({required String email, required String password}) {
@@ -82,10 +86,15 @@ class AuthNotifier extends StateNotifier<AuthState> {
           email: email, password: password);
       //todo: change to values from firebase
       final user = User(
-          email: email, firstName: 'Johnny', lastName: 'Nguyen', uid: 'uid');
+          email: email,
+          firstName: 'Johnny',
+          lastName: 'Nguyen',
+          uid: 'uid',
+          profileImageUrl: null);
       state = AuthState.authenticated(user);
     } on Failure catch (e) {
       state = AuthState.error(e.message);
+      _errorNotifier.setNewError(e);
     }
   }
 }

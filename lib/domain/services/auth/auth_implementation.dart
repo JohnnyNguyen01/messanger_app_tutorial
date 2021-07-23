@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:youtube_messenger_tutorial/domain/models/values/failure.dart';
+import '../../models/values/failure.dart';
 import 'auth.dart';
 
 class AuthRepositoryImplementation implements AuthRepository {
