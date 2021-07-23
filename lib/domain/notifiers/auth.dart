@@ -5,7 +5,7 @@ import '../services/auth/auth.dart';
 import '../models/values/user.dart';
 
 /// State Notifer for [User]
-class AuthNotifier extends StateNotifier<AuthState?> {
+class AuthNotifier extends StateNotifier<AuthState> {
   /// State Notifier Constructor
   ///
   /// Here we declare that the initial state of the User being unauthenticated
