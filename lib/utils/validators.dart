@@ -4,11 +4,15 @@ class StringValidators {
 
   /// email validator
   static String? validateEmail(String? email) {
-    if (email != null) {
-      RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-              .hasMatch(email)
-          ? ''
-          : 'Pease enter a valid email address';
+    if (email != null && email.isNotEmpty) {
+      final emailIsValid = RegExp(
+              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+          .hasMatch(email);
+      if (emailIsValid) {
+        return '';
+      } else {
+        return 'Pleasee enter a valid email address.';
+      }
     } else {
       return 'Please enter your email address';
     }
@@ -19,7 +23,7 @@ class StringValidators {
   /// If password is longer than 8 chars, returns null.
   /// Else returns error message.
   static String? passwordValidator(String? password) {
-    if (password != null) {
+    if (password != null && password.isNotEmpty) {
       password.length > 8
           ? ''
           : 'Please enter a password at least 8 characters long';
@@ -34,7 +38,10 @@ class StringValidators {
   /// matches the other
   static String? confirmPasswordValidator(
       String? passwordOne, String? passwordTwo) {
-    if (passwordOne != null && passwordTwo != null) {
+    if (passwordOne != null &&
+        passwordTwo != null &&
+        passwordOne.isNotEmpty &&
+        passwordTwo.isNotEmpty) {
       if (passwordOne != passwordTwo) {
         return "Passwords don't match. Please try again";
       }

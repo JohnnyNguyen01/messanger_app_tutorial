@@ -9,8 +9,6 @@ class AuthScreen extends HookWidget {
   /// Auth Screen Constructor
   AuthScreen({Key? key}) : super(key: key);
 
-  /// Used for form validation
-  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final screenSize = useScreenSize();
@@ -18,9 +16,13 @@ class AuthScreen extends HookWidget {
     final passwordOneTFController = useTextEditingController();
     final passwordTwoTFController = useTextEditingController();
     final isLogin = useState(true);
+    final _formKey = useMemoized(() => GlobalKey<FormState>());
 
-    void handleTextButtons() {
-      isLogin.value = !isLogin.value;
+    void handleTextButtons() => isLogin.value = !isLogin.value;
+
+    void handleSubmit() {
+      print(_formKey.currentState?.validate());
+      print(emailTFController.text);
     }
 
     return Scaffold(
@@ -78,16 +80,14 @@ class AuthScreen extends HookWidget {
                                   elevatedButtonLabel: 'Login',
                                   textButtonLabel:
                                       "Don't have an account? Sign Up",
-                                  elevatedButtonOnPressed: () =>
-                                      _formKey.currentState?.validate(),
+                                  elevatedButtonOnPressed: handleSubmit,
                                   textButtonOnPressed: handleTextButtons)
                               : _BuildAuthButtons(
                                   screenSize: screenSize,
                                   elevatedButtonLabel: 'Sign Up',
                                   textButtonLabel:
                                       'Already have an account? Login',
-                                  elevatedButtonOnPressed:
-                                      _formKey.currentState?.validate,
+                                  elevatedButtonOnPressed: handleSubmit,
                                   textButtonOnPressed: handleTextButtons),
                         ],
                       ),
