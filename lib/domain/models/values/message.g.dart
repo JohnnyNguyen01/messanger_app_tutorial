@@ -13,6 +13,7 @@ _$_Message _$_$_MessageFromJson(Map<String, dynamic> json) {
     timeStamp: json['timeStamp'] == null
         ? null
         : DateTime.parse(json['timeStamp'] as String),
+    profileImageUrl: json['profileImageUrl'] as String?,
   );
 }
 
@@ -21,4 +22,5 @@ Map<String, dynamic> _$_$_MessageToJson(_$_Message instance) =>
       'uid': instance.uid,
       'message': instance.message,
       'timeStamp': instance.timeStamp?.toIso8601String(),
+      'profileImageUrl': instance.profileImageUrl,
     };

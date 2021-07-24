@@ -38,7 +38,6 @@ class DatabaseImplementation implements DatabaseRepository {
 
   @override
   Future<void> addNewMessage({Message? message}) async {
-    print('function called');
     try {
       if (message != null)
         await _database
@@ -53,12 +52,12 @@ class DatabaseImplementation implements DatabaseRepository {
   Future<Stream<List<Message>>> getMessageStream() async {
     try {
       // get the collection and order by timestamp
-      final snapshotStream = _database
+      final snapshotStream = await _database
           .collection(messagesRootCollection)
-          .orderBy('timestamp', descending: true)
+          .orderBy('timeStamp')
           .snapshots();
       // stream conversion
-      return snapshotStream.asBroadcastStream().map((querySnapshot) =>
+      return await snapshotStream.asBroadcastStream().map((querySnapshot) =>
           // convert each doc to a Message object
           querySnapshot.docs
               .map((docSnapshot) => Message.fromJson(docSnapshot.data()))

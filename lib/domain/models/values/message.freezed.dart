@@ -23,11 +23,13 @@ class _$MessageTearOff {
   _Message call(
       {required String? uid,
       required String? message,
-      required DateTime? timeStamp}) {
+      required DateTime? timeStamp,
+      required String? profileImageUrl}) {
     return _Message(
       uid: uid,
       message: message,
       timeStamp: timeStamp,
+      profileImageUrl: profileImageUrl,
     );
   }
 
@@ -44,6 +46,7 @@ mixin _$Message {
   String? get uid => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
   DateTime? get timeStamp => throw _privateConstructorUsedError;
+  String? get profileImageUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -54,7 +57,11 @@ mixin _$Message {
 abstract class $MessageCopyWith<$Res> {
   factory $MessageCopyWith(Message value, $Res Function(Message) then) =
       _$MessageCopyWithImpl<$Res>;
-  $Res call({String? uid, String? message, DateTime? timeStamp});
+  $Res call(
+      {String? uid,
+      String? message,
+      DateTime? timeStamp,
+      String? profileImageUrl});
 }
 
 /// @nodoc
@@ -70,6 +77,7 @@ class _$MessageCopyWithImpl<$Res> implements $MessageCopyWith<$Res> {
     Object? uid = freezed,
     Object? message = freezed,
     Object? timeStamp = freezed,
+    Object? profileImageUrl = freezed,
   }) {
     return _then(_value.copyWith(
       uid: uid == freezed
@@ -84,6 +92,10 @@ class _$MessageCopyWithImpl<$Res> implements $MessageCopyWith<$Res> {
           ? _value.timeStamp
           : timeStamp // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      profileImageUrl: profileImageUrl == freezed
+          ? _value.profileImageUrl
+          : profileImageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -93,7 +105,11 @@ abstract class _$MessageCopyWith<$Res> implements $MessageCopyWith<$Res> {
   factory _$MessageCopyWith(_Message value, $Res Function(_Message) then) =
       __$MessageCopyWithImpl<$Res>;
   @override
-  $Res call({String? uid, String? message, DateTime? timeStamp});
+  $Res call(
+      {String? uid,
+      String? message,
+      DateTime? timeStamp,
+      String? profileImageUrl});
 }
 
 /// @nodoc
@@ -110,6 +126,7 @@ class __$MessageCopyWithImpl<$Res> extends _$MessageCopyWithImpl<$Res>
     Object? uid = freezed,
     Object? message = freezed,
     Object? timeStamp = freezed,
+    Object? profileImageUrl = freezed,
   }) {
     return _then(_Message(
       uid: uid == freezed
@@ -124,6 +141,10 @@ class __$MessageCopyWithImpl<$Res> extends _$MessageCopyWithImpl<$Res>
           ? _value.timeStamp
           : timeStamp // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      profileImageUrl: profileImageUrl == freezed
+          ? _value.profileImageUrl
+          : profileImageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -132,7 +153,10 @@ class __$MessageCopyWithImpl<$Res> extends _$MessageCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Message implements _Message {
   const _$_Message(
-      {required this.uid, required this.message, required this.timeStamp});
+      {required this.uid,
+      required this.message,
+      required this.timeStamp,
+      required this.profileImageUrl});
 
   factory _$_Message.fromJson(Map<String, dynamic> json) =>
       _$_$_MessageFromJson(json);
@@ -143,10 +167,12 @@ class _$_Message implements _Message {
   final String? message;
   @override
   final DateTime? timeStamp;
+  @override
+  final String? profileImageUrl;
 
   @override
   String toString() {
-    return 'Message(uid: $uid, message: $message, timeStamp: $timeStamp)';
+    return 'Message(uid: $uid, message: $message, timeStamp: $timeStamp, profileImageUrl: $profileImageUrl)';
   }
 
   @override
@@ -160,7 +186,10 @@ class _$_Message implements _Message {
                     .equals(other.message, message)) &&
             (identical(other.timeStamp, timeStamp) ||
                 const DeepCollectionEquality()
-                    .equals(other.timeStamp, timeStamp)));
+                    .equals(other.timeStamp, timeStamp)) &&
+            (identical(other.profileImageUrl, profileImageUrl) ||
+                const DeepCollectionEquality()
+                    .equals(other.profileImageUrl, profileImageUrl)));
   }
 
   @override
@@ -168,7 +197,8 @@ class _$_Message implements _Message {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(uid) ^
       const DeepCollectionEquality().hash(message) ^
-      const DeepCollectionEquality().hash(timeStamp);
+      const DeepCollectionEquality().hash(timeStamp) ^
+      const DeepCollectionEquality().hash(profileImageUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -185,7 +215,8 @@ abstract class _Message implements Message {
   const factory _Message(
       {required String? uid,
       required String? message,
-      required DateTime? timeStamp}) = _$_Message;
+      required DateTime? timeStamp,
+      required String? profileImageUrl}) = _$_Message;
 
   factory _Message.fromJson(Map<String, dynamic> json) = _$_Message.fromJson;
 
@@ -195,6 +226,8 @@ abstract class _Message implements Message {
   String? get message => throw _privateConstructorUsedError;
   @override
   DateTime? get timeStamp => throw _privateConstructorUsedError;
+  @override
+  String? get profileImageUrl => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$MessageCopyWith<_Message> get copyWith =>

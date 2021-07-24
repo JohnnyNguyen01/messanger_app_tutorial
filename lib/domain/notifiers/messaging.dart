@@ -26,10 +26,10 @@ class UserMessageNotifier extends StateNotifier<MessageState> {
   Future<void> sendNewMessage({required String messageText}) async {
     try {
       final message = Message(
-        uid: _user.uid,
-        message: messageText,
-        timeStamp: DateTime.now(),
-      );
+          uid: _user.uid,
+          message: messageText,
+          timeStamp: DateTime.now(),
+          profileImageUrl: _user.profileImageUrl);
       state = MessageState.sendingMessage(message: message);
       await _databaseRepo.addNewMessage(message: message);
       state = MessageState.idle();

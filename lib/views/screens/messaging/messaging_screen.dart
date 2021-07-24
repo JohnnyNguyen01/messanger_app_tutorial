@@ -1,6 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../../domain/models/states/auth/auth_state.dart';
+import '../../../domain/providers/auth.dart';
+import '../../../domain/models/values/message.dart';
 import '../../../constants/hooks.dart';
 import '../../../domain/models/values/failure.dart';
 import '../../../domain/providers/error.dart';
@@ -19,6 +23,7 @@ class MessagingScreen extends HookWidget {
     final messageNotifier = useProvider(userMessageProvider.notifier);
     final messageIsValid = useState(false);
     final messageTfKey = useMemoized(() => GlobalKey<FormState>());
+    final messageTFNode = useMemoized(() => FocusNode());
 
     return ProviderListener<Failure?>(
       onChange: (context, failure) => failure != null
@@ -42,12 +47,11 @@ class MessagingScreen extends HookWidget {
                 flex: 5,
                 child: SafeArea(
                   child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: messages.length,
-                      itemBuilder: (_, index) {
-                        print('new message');
-                        return Text(messages[index].message ?? '');
-                      }),
+                    shrinkWrap: true,
+                    itemCount: messages.length,
+                    itemBuilder: (_, index) =>
+                        _MessageBubble(message: messages[index]),
+                  ),
                 ),
               ),
               Expanded(
@@ -64,10 +68,14 @@ class MessagingScreen extends HookWidget {
                           child: Form(
                             key: messageTfKey,
                             child: TextFormField(
+                              focusNode: messageTFNode,
                               validator: StringValidators.messageValidator,
                               controller: messageTFController,
-                              onChanged: (_) =>
-                                  messageTfKey.currentState?.validate(),
+                              onChanged: (_) {
+                                if (messageTfKey.currentState != null)
+                                  messageIsValid.value =
+                                      messageTfKey.currentState!.validate();
+                              },
                               decoration: InputDecoration(
                                 hintText: 'Write a message...',
                                 focusedBorder: OutlineInputBorder(
@@ -86,9 +94,13 @@ class MessagingScreen extends HookWidget {
                         ),
                         IconButton(
                           onPressed: messageIsValid.value
-                              ? () async =>
+                              ? () async {
                                   await messageNotifier.sendNewMessage(
-                                      messageText: messageTFController.text)
+                                      messageText: messageTFController.text);
+                                  messageTFController.clear();
+                                  messageIsValid.value == false;
+                                  messageTFNode.unfocus();
+                                }
                               : null,
                           icon: Icon(
                             Icons.send,
@@ -111,4 +123,68 @@ class MessagingScreen extends HookWidget {
       ),
     );
   }
+}
+
+class _MessageBubble extends HookWidget {
+  _MessageBubble({required this.message, Key? key}) : super(key: key);
+
+  final Message message;
+
+  @override
+  Widget build(BuildContext context) {
+    final screenSize = useScreenSize();
+    final auth = useProvider(authProvider);
+
+    final user = auth is Authenticated ? auth.user : null;
+    final messageIsFromUser = user?.uid == message.uid;
+    const messageProfileImageRadius = 20.0;
+    const messageBubbleRadius = 10.0;
+
+    return Container(
+      margin: EdgeInsets.all(5),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment:
+            messageIsFromUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+        children: [
+          messageIsFromUser
+              ? _buildTextBubble(
+                  screenSize, messageBubbleRadius, messageIsFromUser)
+              : _buildCircleAvatar(messageProfileImageRadius),
+          const SizedBox(width: 10),
+          messageIsFromUser
+              ? _buildCircleAvatar(messageProfileImageRadius)
+              : _buildTextBubble(
+                  screenSize, messageBubbleRadius, messageIsFromUser)
+        ],
+      ),
+    );
+  }
+
+  Flexible _buildTextBubble(Size screenSize, double messageBubbleRadius,
+          bool messageIsFromUser) =>
+      Flexible(
+        child: Container(
+          constraints: BoxConstraints(maxWidth: screenSize.width * 0.65),
+          padding: EdgeInsets.all(8),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(messageBubbleRadius),
+              color: messageIsFromUser ? Color(0xFFC5D0D4) : Colors.black54,
+              shape: BoxShape.rectangle),
+          child: Text(
+            message.message ?? '',
+            style: TextStyle(
+                color: messageIsFromUser ? Colors.black87 : Colors.white),
+          ),
+        ),
+      );
+
+  CircleAvatar _buildCircleAvatar(double messageProfileImageRadius) =>
+      CircleAvatar(
+        radius: messageProfileImageRadius,
+        child: message.profileImageUrl == null ? Icon(Icons.person) : null,
+        foregroundImage: message.profileImageUrl != null
+            ? CachedNetworkImageProvider(message.profileImageUrl!)
+            : null,
+      );
 }

@@ -70,7 +70,10 @@ class StringValidators {
 
   /// Validator for a User's first name
   static String? messageValidator(String? message) {
-    if (message != null && message.isNotEmpty) {
+    if (message != null &&
+        message.isNotEmpty &&
+        message.length > 0 &&
+        message != '') {
       return null;
     } else {
       return 'Please enter a message';
