@@ -24,6 +24,9 @@ class AuthScreen extends HookWidget {
     final _formKey = useMemoized(() => GlobalKey<FormState>());
     final authNotifier = useProvider(authProvider.notifier);
 
+    final modalRoute = useModalRoute();
+    print(modalRoute?.settings.name);
+
     void handleTextButtons() => isLogin.value = !isLogin.value;
 
     return Scaffold(

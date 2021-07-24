@@ -22,3 +22,7 @@ void useSnackBar({
     ),
   );
 }
+
+/// Modal Route Hoook
+ModalRoute<dynamic>? useModalRoute({BuildContext? context}) =>
+    ModalRoute.of(context ?? useContext());
