@@ -25,7 +25,6 @@ class AuthScreen extends HookWidget {
     final authNotifier = useProvider(authProvider.notifier);
 
     final modalRoute = useModalRoute();
-    print(modalRoute?.settings.name);
 
     void handleTextButtons() => isLogin.value = !isLogin.value;
 

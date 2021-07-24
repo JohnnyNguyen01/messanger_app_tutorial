@@ -85,16 +85,12 @@ class AuthNotifier extends StateNotifier<AuthState> {
       {required String? email, required String? password}) async {
     state = AuthState.loading();
     try {
-      await _authRepo.loginWithEmailAndPassword(
+      final uid = await _authRepo.loginWithEmailAndPassword(
           email: email, password: password);
-      //todo: change to values from firebase
-      final user = User(
-          email: email,
-          firstName: 'Johnny',
-          lastName: 'Nguyen',
-          uid: 'uid',
-          profileImageUrl: null);
-      state = AuthState.authenticated(user);
+      if (uid != null) {
+        final user = await _databaseRepo.getUser(uid: uid);
+        state = AuthState.authenticated(user);
+      }
     } on Failure catch (e) {
       state = AuthState.error(e.message);
       _errorNotifier.setNewError(e);

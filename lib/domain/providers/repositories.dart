@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:youtube_messenger_tutorial/domain/services/database/storage_implementation.dart';
+import '../services/database/storage_implementation.dart';
 import '../services/database/storage_repository.dart';
 import '../services/auth/auth.dart';
 import '../services/auth/auth_implementation.dart';

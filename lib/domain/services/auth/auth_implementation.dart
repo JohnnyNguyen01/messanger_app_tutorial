@@ -8,18 +8,13 @@ import 'auth.dart';
 /// service you like.
 class AuthRepositoryImplementation implements AuthRepository {
   @override
-  User? getUser() {
-    // TODO: implement getUser
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> loginWithEmailAndPassword(
+  Future<String?> loginWithEmailAndPassword(
       {required String? email, required String? password}) async {
     try {
       if (email != null && password != null) {
-        await FirebaseAuth.instance
+        final userCredential = await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email, password: password);
+        return userCredential.user?.uid;
       }
     } on FirebaseAuthException catch (e) {
       throw Failure(code: e.code, message: e.message);
