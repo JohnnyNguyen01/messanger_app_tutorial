@@ -10,7 +10,7 @@ import '../services/database/database_repository.dart';
 class UserMessageNotifier extends StateNotifier<MessageState> {
   /// [UserMessageNotifier] constructor
   UserMessageNotifier(
-      {required User? user,
+      {required User user,
       required DatabaseRepository databaseRepo,
       required ErrorNotifier errorNotifier})
       : _user = user,
@@ -18,7 +18,7 @@ class UserMessageNotifier extends StateNotifier<MessageState> {
         _errorNotifier = errorNotifier,
         super(MessageState.idle());
 
-  final User? _user;
+  final User _user;
   final DatabaseRepository _databaseRepo;
   final ErrorNotifier _errorNotifier;
 
@@ -26,7 +26,7 @@ class UserMessageNotifier extends StateNotifier<MessageState> {
   Future<void> sendNewMessage({required String messageText}) async {
     try {
       final message = Message(
-        uid: _user?.uid,
+        uid: _user.uid,
         message: messageText,
         timeStamp: DateTime.now(),
       );

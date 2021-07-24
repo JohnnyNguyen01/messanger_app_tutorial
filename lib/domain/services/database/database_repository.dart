@@ -17,5 +17,5 @@ abstract class DatabaseRepository {
   Future<void> addNewMessage({Message? message});
 
   /// Returns a stream of all the messages within the chat room
-  Stream<List<Message>> getMessageStream();
+  Future<Stream<List<Message>>> getMessageStream();
 }

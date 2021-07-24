@@ -9,10 +9,13 @@ import 'repositories.dart';
 import '../models/values/message.dart';
 
 /// Provides a stream of all the messages within the database.
-final messagesProvider = StreamProvider<List<Message>>((ref) {
+final messagesProvider =
+    StreamProvider.autoDispose<List<Message>>((ref) async* {
   final databaseRepo = ref.read(databaseRepoProvider);
-  final messageStream = databaseRepo.getMessageStream();
-  return messageStream;
+  final messageStream = await databaseRepo.getMessageStream();
+  await for (final list in messageStream) {
+    yield list;
+  }
 });
 
 /// State Notfier Provider for Message State
@@ -23,9 +26,9 @@ final userMessageProvider =
   final userState = ref.watch(authProvider);
   final databaseRepo = ref.read(databaseRepoProvider);
   final errorNotifier = ref.read(errorProvider.notifier);
-  User? user;
+  late User user;
   if (userState is Authenticated) {
-    user = userState.user;
+    user = userState.user!;
   }
   return UserMessageNotifier(
       user: user, databaseRepo: databaseRepo, errorNotifier: errorNotifier);

@@ -40,11 +40,14 @@ class MessagingScreen extends HookWidget {
             children: [
               Expanded(
                 flex: 5,
-                child: ListView.builder(
-                  itemCount: messages.length,
-                  itemBuilder: (_, index) => Text(
-                    index.toString(),
-                  ),
+                child: SafeArea(
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: messages.length,
+                      itemBuilder: (_, index) {
+                        print('new message');
+                        return Text(messages[index].message ?? '');
+                      }),
                 ),
               ),
               Expanded(
@@ -63,14 +66,8 @@ class MessagingScreen extends HookWidget {
                             child: TextFormField(
                               validator: StringValidators.messageValidator,
                               controller: messageTFController,
-                              onChanged: (_) {
-                                if (messageTfKey.currentState != null) {
-                                  messageIsValid.value =
-                                      messageTfKey.currentState!.validate();
-                                  messageNotifier.sendNewMessage(
-                                      messageText: messageTFController.text);
-                                }
-                              },
+                              onChanged: (_) =>
+                                  messageTfKey.currentState?.validate(),
                               decoration: InputDecoration(
                                 hintText: 'Write a message...',
                                 focusedBorder: OutlineInputBorder(

@@ -28,7 +28,7 @@ class DatabaseImplementation implements DatabaseRepository {
           await _database.collection(usersRootCollection).doc(uid).get();
       final docData = docSnapshot.data();
       // convert document to user
-      docData != null
+      return docData != null
           ? User.fromJson(docData)
           : throw Failure(message: 'Error retrieving your profile details');
     } on FirebaseException catch (e) {
@@ -38,6 +38,7 @@ class DatabaseImplementation implements DatabaseRepository {
 
   @override
   Future<void> addNewMessage({Message? message}) async {
+    print('function called');
     try {
       if (message != null)
         await _database
@@ -49,7 +50,7 @@ class DatabaseImplementation implements DatabaseRepository {
   }
 
   @override
-  Stream<List<Message>> getMessageStream() {
+  Future<Stream<List<Message>>> getMessageStream() async {
     try {
       // get the collection and order by timestamp
       final snapshotStream = _database
