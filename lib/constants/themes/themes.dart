@@ -10,6 +10,7 @@ class Themes {
   static final primaryTheme = ThemeData(
     backgroundColor: backgroundColor,
     primaryColor: Colors.black,
+    disabledColor: disabledColoer,
     appBarTheme: AppBarTheme(backgroundColor: Colors.black),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: Colors.black,

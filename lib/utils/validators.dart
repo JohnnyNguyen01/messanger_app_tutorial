@@ -67,4 +67,13 @@ class StringValidators {
       return 'Please enter your first name';
     }
   }
+
+  /// Validator for a User's first name
+  static String? messageValidator(String? message) {
+    if (message != null && message.isNotEmpty) {
+      return null;
+    } else {
+      return 'Please enter a message';
+    }
+  }
 }

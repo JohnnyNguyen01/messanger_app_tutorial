@@ -1,6 +1,7 @@
 import 'dart:io';
 
 /// Storage Repo interface
+// ignore: one_member_abstracts
 abstract class StorageRepository {
   /// Uploads an image to the storage database
   ///

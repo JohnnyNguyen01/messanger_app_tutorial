@@ -8,3 +8,6 @@ const circleAvatarRadius = 80.0;
 
 /// Error color
 const errorColor = Colors.red;
+
+/// Disabled color
+const disabledColoer = Colors.grey;
