@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../../constants/constants.dart';
 import '../../../domain/models/states/auth/auth_state.dart';
 import '../../../domain/providers/auth.dart';
 import '../../../domain/models/values/message.dart';
@@ -67,29 +68,11 @@ class MessagingScreen extends HookWidget {
                           /// Message Text Field
                           child: Form(
                             key: messageTfKey,
-                            child: TextFormField(
-                              focusNode: messageTFNode,
-                              validator: StringValidators.messageValidator,
-                              controller: messageTFController,
-                              onChanged: (_) {
-                                if (messageTfKey.currentState != null)
-                                  messageIsValid.value =
-                                      messageTfKey.currentState!.validate();
-                              },
-                              decoration: InputDecoration(
-                                hintText: 'Write a message...',
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(20),
-                                  ),
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(20),
-                                  ),
-                                ),
-                              ),
-                            ),
+                            child: _buildTextField(
+                                messageTFNode,
+                                messageTFController,
+                                messageTfKey,
+                                messageIsValid),
                           ),
                         ),
                         IconButton(
@@ -123,6 +106,34 @@ class MessagingScreen extends HookWidget {
       ),
     );
   }
+
+  TextFormField _buildTextField(
+          FocusNode messageTFNode,
+          TextEditingController messageTFController,
+          GlobalKey<FormState> messageTfKey,
+          ValueNotifier<bool> messageIsValid) =>
+      TextFormField(
+        focusNode: messageTFNode,
+        validator: StringValidators.messageValidator,
+        controller: messageTFController,
+        onChanged: (_) {
+          if (messageTfKey.currentState != null)
+            messageIsValid.value = messageTfKey.currentState!.validate();
+        },
+        decoration: InputDecoration(
+          hintText: 'Write a message...',
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
+            ),
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
+            ),
+          ),
+        ),
+      );
 }
 
 class _MessageBubble extends HookWidget {
@@ -137,8 +148,6 @@ class _MessageBubble extends HookWidget {
 
     final user = auth is Authenticated ? auth.user : null;
     final messageIsFromUser = user?.uid == message.uid;
-    const messageProfileImageRadius = 20.0;
-    const messageBubbleRadius = 10.0;
 
     return Container(
       margin: EdgeInsets.all(5),
@@ -168,8 +177,17 @@ class _MessageBubble extends HookWidget {
           constraints: BoxConstraints(maxWidth: screenSize.width * 0.65),
           padding: EdgeInsets.all(8),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(messageBubbleRadius),
-              color: messageIsFromUser ? Color(0xFFC5D0D4) : Colors.black54,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(messageBubbleRadius),
+                topRight: Radius.circular(messageBubbleRadius),
+                bottomRight: messageIsFromUser
+                    ? Radius.zero
+                    : Radius.circular(messageBubbleRadius),
+                bottomLeft: messageIsFromUser
+                    ? Radius.circular(messageBubbleRadius)
+                    : Radius.zero,
+              ),
+              color: messageIsFromUser ? userTextBubbleColor : Colors.black54,
               shape: BoxShape.rectangle),
           child: Text(
             message.message ?? '',
